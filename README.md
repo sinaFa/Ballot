@@ -4,10 +4,17 @@ This project demonstrates a basic Hardhat use case. It comes with a sample contr
 
 Try running some of the following tasks:
 
+# To run the script by passign the proposals as arguments
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+yarn run ts-node --files scripts/Deployment.ts "proposal1" "proposal2" "proposal3"
+```
+
+To give rights to a wallet:
+```shell
+yarn run ts-node --files scripts/GiveRightToVote.ts [contract_address] [wallet_address]
+```
+
+To get the winner proposal:
+```shell
+yarn run ts-node --files scripts/Winner.ts [contract_address]
 ```
