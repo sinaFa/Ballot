@@ -12,7 +12,6 @@ async function main () {
   if (params.length <= 0) throw new Error("Not enough args");
  
   const contractAddress = params[0]
-  const targetAccount = params[1]
 
   const provider =  new ethers.providers.InfuraProvider("goerli",  process.env.INFURA_API_KEY);
   const wallet = ethers.Wallet.fromMnemonic(process.env.MNEMONIC ?? "")
@@ -22,9 +21,18 @@ async function main () {
   const ballotContractFactory =  new Ballot__factory(signer)
 
   ballotContract = ballotContractFactory.attach(contractAddress) ;
-  const tx = await ballotContract.giveRightToVote(targetAccount)
-  const receipt =  await tx.wait()
-  console.log({receipt})
+
+  console.log("Let's go over proposals") 
+  for (let i=0; i < 100; i++) {
+    try {
+      const proposal = await ballotContract.proposals(i);
+      console.log("proposal[" + i + "] = { \"" + ethers.utils.parseBytes32String(proposal.name) + "\", " + proposal.voteCount+ "}");
+    } catch(e){
+      i = 100;
+    }
+  }
+
+
 }
  
 
